@@ -16,6 +16,16 @@
         "test-coverage": "vendor/bin/phpunit --coverage-text",
         "format": "vendor/bin/php-cs-fixer fix"
     },
+    "autoload": {
+        "psr-4": {
+            "Vendor\\Package\\": "src"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Vendor\\Package\\Tests": "tests"
+        }
+    },
     "license": "MIT",
     "authors": [
         {
