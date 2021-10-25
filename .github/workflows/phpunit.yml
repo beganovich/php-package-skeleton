@@ -9,6 +9,11 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        operating-system: ["ubuntu-20.04"]
+        php-versions: ["7.4"]
+        phpunit-versions: ["latest"]
 
     steps:
       - uses: actions/checkout@v2
@@ -24,6 +29,7 @@ jobs:
           key: ${{ runner.os }}-php-${{ hashFiles('**/composer.lock') }}
           restore-keys: |
             ${{ runner.os }}-php-
+
       - name: Install dependencies
         run: composer install --prefer-dist --no-progress
 
