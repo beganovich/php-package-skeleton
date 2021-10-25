@@ -12,7 +12,7 @@ jobs:
     strategy:
       matrix:
         operating-system: ["ubuntu-20.04"]
-        php-versions: ["7.4"]
+        php-versions: ["7.4", "8.0"]
         phpunit-versions: ["latest"]
 
     steps:
@@ -20,6 +20,8 @@ jobs:
 
       - name: Validate composer.json and composer.lock
         run: composer validate --strict
+        with:
+          php-version: ${{ matrix.php-versions }}
 
       - name: Cache Composer packages
         id: composer-cache
@@ -29,9 +31,14 @@ jobs:
           key: ${{ runner.os }}-php-${{ hashFiles('**/composer.lock') }}
           restore-keys: |
             ${{ runner.os }}-php-
+          php-version: ${{ matrix.php-versions }}
 
       - name: Install dependencies
         run: composer install --prefer-dist --no-progress
+        with:
+          php-version: ${{ matrix.php-versions }}
 
       - name: PHPUnit tests
         run: php vendor/bin/phpunit --testdox
+        with:
+          php-version: ${{ matrix.php-versions }}
